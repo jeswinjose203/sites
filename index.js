@@ -4348,7 +4348,7 @@ app.get('/AUDITOR.html',function(req,res){
             <td>REMAINING DAYS</td>
             <td>HF DONE DATE</td>
             <td>HF DUE DATE</td>
-      git      <td>REMAINING DAYS</td>
+           <td>REMAINING DAYS</td>
             <td>FTS DONE DATE</td>
             <td>FTS DUE DATE</td>
             <td>REMAINING DAYS</td>
