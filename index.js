@@ -1230,7 +1230,7 @@ app.use('/css',express.static(path.join(__dirname,'node_modules/bootstrap/dist/c
 app.use('/js',express.static(path.join(__dirname,'node_modules/bootstrap/dist/js')));
 app.use(express.static(__dirname+'/imag'));
 app.get('/',function(req,res){
-    fs.readFile("dash.html", function (error, pgResp){
+    fs.readFile("index.html", function (error, pgResp){
         if (error) {
             res.writeHead(404);
             res.write('Contents you are looking are Not Found');
@@ -4348,7 +4348,7 @@ app.get('/AUDITOR.html',function(req,res){
             <td>REMAINING DAYS</td>
             <td>HF DONE DATE</td>
             <td>HF DUE DATE</td>
-            <td>REMAINING DAYS</td>
+      git      <td>REMAINING DAYS</td>
             <td>FTS DONE DATE</td>
             <td>FTS DUE DATE</td>
             <td>REMAINING DAYS</td>
@@ -4698,31 +4698,17 @@ app.get('/TECHNICIAN.html',function(req,res){
 
             res.write(`
             <form action="/technician_continuation_trainings" method="post">
-            <style>
-            @media only screen and (max-device-width: 600px) {
-                .row{display:none;}
-            }
-
-
-
-            </style>
-         
-            
              <div class="row">
               <div class="col">
               <input type="text" class="form-control" id="i1" name="SR_NO" placeholder="SR NO">
                 </div>
            
                 <div class="col">
-                <input type="text" class="form-control" id="i2" name="NAME " placeholder="Name for users">
-                <br><br>
+                <input type="text" class="form-control" id="i2" name="NAME" placeholder="Name">
                 </div>
-                <br><br>
                 <div class="col">
                 <input type="text" class="form-control" id="i3" name="DESGN" placeholder="Desgn">
-                <br>
                 </div>
-                <br>
             
                 <div class="col">
                 <input type="text" class="form-control" id="i4" name="STAFF_NO" placeholder="Staff No">
@@ -4762,9 +4748,8 @@ app.get('/TECHNICIAN.html',function(req,res){
                 <button type="submit" class="btn btn-primary mb-3" style="margin-top: 4%;">SAVE CHANGES</button>
                 
                 </div>
-            
                 </div>
-                
+                </div>
             </form>
           `);
 
@@ -5323,5 +5308,5 @@ app.get('/other.html',function(req,res){
     });
 });
 
-http.createServer(app).listen(8080);
+http.createServer(app).listen(8081);
 
