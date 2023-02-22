@@ -773,7 +773,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var mysql = require('mysql');
 const { error } = require("console");
 
-var length_of_rows=0,cnt=0,length_of_rows_tools=0,cnt1=0,cnt2=0,length_of_rows_technician=0,length_of_rows_reg_audit=0,cnt3=0,length_of_rows_quality_auditor=0,length_of_rows_internal=0,cnt4=0,length_of_rows_amelicense=0,length_of_rows_amecont=0,length_of_rows_ameauth=0;
+var length_of_rows=0,cnt=0,length_of_rows_tools=0,length_of_rows_audit_operator,cnt1=0,cnt2=0,length_of_rows_technician=0,length_of_rows_reg_audit=0,cnt3=0,length_of_rows_quality_auditor=0,length_of_rows_internal=0,cnt4=0,length_of_rows_amelicense=0,length_of_rows_amecont=0,length_of_rows_ameauth=0,length_of_rows_line_main,length_of_rows_audit_of_external;
 let today = new Date();
 
 var connection = mysql.createConnection({
@@ -1294,8 +1294,12 @@ app.get('/',function(req,res){
 			</div>
 		</div>
             `);
+
         }
+    res.end();
+
     });
+    
 });
 app.post('/amelicense',function(req,res){
     var sql1 = "INSERT INTO new_schema.amelicense (sr_no,name,license_cat,dgca_lic_no,dgca_lic_validity,easa_lic_no,easa_lic_validity,A320_series_V2500,A320_series_CFM_56,A320_series_LEAP_1A,A320_series_p_and_w,A330_T700,A330_NEO_T70000,A330_GE_CF6,A350_TRENT_XWB,B737_NG_CFM56_7B,B737_MAX_LEAP_1B,B777_GE_90,B787_GEnX,remarks) VALUES ?";
@@ -1306,6 +1310,7 @@ app.post('/amelicense',function(req,res){
         return res.redirect('/ENGINEER.html');
         
     });
+    
 });
 app.post('/ame_continuation_trainings',function(req,res){
     var sql1 = "INSERT INTO new_schema.ame_continuation_trainings (sr_no,name,staff_no,A320_V2500,A320_CFM_LEAP_1A,A330_RR_T700,A330_NEO_RR_T7000,A330_GE_CF6,A330_P_AND_W,A350_RR_T_XWB,B737_CFM56,B737_MAX_CFM_LEAP1B,B777_GE90,B787_GENX,ADDNL_REFR,HF,FTS,EWIS,SMS,REGULATIONS,REMARK) VALUES ?";
@@ -1316,6 +1321,7 @@ app.post('/ame_continuation_trainings',function(req,res){
         return res.redirect('/ENGINEER.html');
         
     });
+    
 });
 app.post('/ame_authorisations',function(req,res){
     var sql1 = "INSERT INTO new_schema.ame_authorisations (sr_no,name,staff_no,ciasl_authn_no,ciasl_authn_validity,fly_dxb,island_authn_validity,oman_air,qatar,sri_lanka,kuwait,jazeera,air_arabia,ethihad,gulfair,island,airasia_thai,scoot_tiger,fly__dxb,remark) VALUES ?";
@@ -1326,6 +1332,7 @@ app.post('/ame_authorisations',function(req,res){
         return res.redirect('/ENGINEER.html');
         
     });
+    
 });
 app.get('/ENGINEER.html',(req,res)=>{
     fs.readFile("ENGINEER.html", function (err, pgResp){
@@ -2803,6 +2810,7 @@ app.get('/ENGINEER.html',(req,res)=>{
                             }
                             res.write("</table>");
                             res.write("</div>");
+                            res.end();
                             //fun2();
                         });
                     };
@@ -2811,6 +2819,7 @@ app.get('/ENGINEER.html',(req,res)=>{
         };
         }
     });
+    
 });
 
 app.post('/tools_and_equipment_calibration',function(req,res){
@@ -2822,6 +2831,7 @@ app.post('/tools_and_equipment_calibration',function(req,res){
         return res.redirect('/TOOLS.html');
         
     });
+    
 });
 app.get('/TOOLS.html',function(req,res){
     fs.readFile("TOOLS.html", function (err, pgResp){
@@ -3028,12 +3038,13 @@ app.get('/TOOLS.html',function(req,res){
                     }
                     res.write("</table>");
                     res.write("</div>");
-                    
+                    res.end();
                 });
             };
             jeswin1();
         }
     });
+    
 });
 app.post('/regular_audit',function(req,res){
     var sql1 = "INSERT INTO new_schema.regular_audit (sr_no,regulator,audit_date,no_of_findings,no_of_observations,cap_due_date,cap_submitted_date,ca_submit_due_date,ca_submitted_date,audit_closure_date,remark) VALUES ?";
@@ -3044,6 +3055,7 @@ app.post('/regular_audit',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.post('/audit_by_airline_operators',function(req,res){
     var sql1 = "INSERT INTO new_schema.audit_by_airline_operators (sr_no,operator,audit_date,no_of_findings,no_of_obsrvns,cap_due_date,cap_submitted_date,cap_submit_due_date,ca_submitted_date,audit_closure_date,remark) VALUES ?";
@@ -3054,6 +3066,7 @@ app.post('/audit_by_airline_operators',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.post('/quality_audit',function(req,res){
     var sql1 = "INSERT INTO new_schema.quality_audit (sr_no,auditor_name,audit_date,no_of_findings,no_of_observations,cap_due_date,cap_submitted_date,ca_submit_due_date,ca_submitted_date,audit_closure_date,remark) VALUES ?";
@@ -3064,6 +3077,7 @@ app.post('/quality_audit',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.post('/line_maintenance',function(req,res){
     var sql1 = "INSERT INTO new_schema.line_maintenance (sr_no,auditor_name,audit_date,audit_type,no_of_findings,no_of_observations,cap_due_date,cap_submitted_date,ca_submit_due_date,ca_submitted_date,audit_closure_date,remark) VALUES ?";
@@ -3074,6 +3088,7 @@ app.post('/line_maintenance',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.post('/audit_of_external',function(req,res){
     var sql1 = "INSERT INTO new_schema.audit_of_external (sr_no,auditee_orgzn,auditor_name,audit_date,no_of_findings,no_of_observations,cap_received_date,cap_approved_date,ca_received_date,ca_approved_date,audit_closed_date,remark) VALUES ?";
@@ -3084,6 +3099,7 @@ app.post('/audit_of_external',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.post('/internal_quality_auditors',function(req,res){
     var sql1 = "INSERT INTO new_schema.internal_quality_auditors (sr_no,name,auth_no,auth_validity_date,auditor_date_initial,regulations_done_date,regulations_due_date,hf_done_date,hf_due_date,fts_done_date,fts_due_date,ewis_done_date,ewis_due_date,sms_done_date,sms_due_date,remark) VALUES ?";
@@ -3094,6 +3110,7 @@ app.post('/internal_quality_auditors',function(req,res){
         return res.redirect('/AUDITOR.html');
         
     });
+    
 });
 app.get('/AUDITOR.html',function(req,res){
     fs.readFile("AUDITOR.html", function (err, pgResp){
@@ -4665,7 +4682,7 @@ app.get('/AUDITOR.html',function(req,res){
                     }
                     res.write("</table>");
                     res.write("</div>");
-                    
+                    res.end();
                 });
             };
             jeswin8();
@@ -4676,6 +4693,7 @@ app.get('/AUDITOR.html',function(req,res){
     };
 };
     });
+    
 });
 app.post('/technician_continuation_trainings',function(req,res){
 
@@ -4686,6 +4704,297 @@ app.post('/technician_continuation_trainings',function(req,res){
         length_of_rows_technician++;
         return res.redirect('/TECHNICIAN.html');
     });
+    
+
+});
+app.post('/search_technician',function(req,res){
+    fs.readFile("TECHNICIAN.html", function (err, pgResp){
+        if (err) {
+            res.writeHead(404);
+            res.write('Contents you are looking are Not Found');
+        } else {
+            res.write(pgResp);
+            
+            console.log(req.body.jen);
+            var jes = () => {
+                connection.query(`SELECT COUNT(*) AS C FROM new_schema.technician_continuation_trainings WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                    if (error) throw error;
+                    var lengt = resu[0].C;
+                    console.log(lengt);
+                    var jen = () => {
+                        connection.query(`SELECT * FROM new_schema.technician_continuation_trainings WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`, function (error, result) {
+                            res.write("<div class='table-responsive container'>");
+                            res.write("<table class='table table-striped table-hover table-bordered'>");
+                            res.write("<tr><td>SR NO</td><td>Name</td><td>Desgn</td><td>Staff No</td><td>HF</td><td>Remaining days</td><td>EWIS</td><td>Remaining days</td><td>SMS</td><td>Remaining days</td><td>IM proc. moe & regln</td><td>Remaining days</td><td>store proc & esds</td><td>Remaining days</td><td>DGR</td><td>Remaining days</td><td>REMARKS</td></tr>");
+                            
+                            for(let i=0;i<lengt;i++) 
+                            {
+                                
+                                res.write('<tr>');
+                            if(result[i].sr_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].sr_no.toString());
+                            console.log(result[i].sr_no.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].name)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].name);
+                            console.log(result[i].name);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].desgn)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].desgn);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].staff_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].staff_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].hf)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].hf);
+                            res.write('</td>');
+                            var h_f = new Date(result[i].hf);
+                            var total_seconds = Math.abs(today - h_f) / 1000; 
+                            var days_difference_5 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_5<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_5<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_5<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_5.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].ewis)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].ewis);
+                            res.write('</td>');
+                            var ews = new Date(result[i].ewis);
+                            var total_seconds = Math.abs(today - ews) / 1000; 
+                            var days_difference_7 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_7<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_7<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_7<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_7.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].sms)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].sms);
+                            res.write('</td>');
+                            var s_s = new Date(result[i].sms);
+                            var total_seconds = Math.abs(today - s_s) / 1000; 
+                            var days_difference_9 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_9<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_9<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_9<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_9.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].lm_procedure_moe_and_regln)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].lm_procedure_moe_and_regln);
+                            res.write('</td>');
+                            var lm = new Date(result[i].lm_procedure_moe_and_regln);
+                            var total_seconds = Math.abs(today - lm) / 1000; 
+                            var days_difference_11 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_11<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_11<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_11<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_11.toString());
+                            res.write('</td>');
+                            
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].store_procedure_and_esds)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].store_procedure_and_esds);
+                            res.write('</td>');
+                            var stor = new Date(result[i].sms);
+                            var total_seconds = Math.abs(today - stor) / 1000; 
+                            var days_difference_13 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_13<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_13<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_13<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_13.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].dgr)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].dgr);
+                            res.write('</td>');
+                            var dg = new Date(result[i].sms);
+                            var total_seconds = Math.abs(today - dg) / 1000; 
+                            var days_difference_15 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_15<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_15<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_15<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_15.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].remark)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].remark);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            res.write('</tr>');
+                            }
+                            res.write("</table></div>");
+                            res.end();
+                          });
+                          
+                          
+                            
+                        };
+                    jen();
+                    
+                });
+            };
+            jes();
+            
+        }
+        
+        
+    });
+    
 });
 app.get('/TECHNICIAN.html',function(req,res){
     fs.readFile("TECHNICIAN.html", function (err, pgResp){
@@ -5008,12 +5317,15 @@ app.get('/TECHNICIAN.html',function(req,res){
                     }
                     res.write("</table>");
                     res.write("</div>");
-                    
+                    res.end();
                 });
             };
             jeswin2();
         }
+        
+
     });
+    
 });
 app.post('/all_staff_data',function(req,res){
     var sql = "INSERT INTO new_schema.all_staff_data (sr_no,name,desgn,joining_date,contract_validity_date,avsec_training_due_date,aep_validity,adp_validity,remarks,staff_no) VALUES ?";
@@ -5023,6 +5335,8 @@ app.post('/all_staff_data',function(req,res){
         length_of_rows++;
         return res.redirect('/other.html');
     });
+    
+
 });
 app.get('/other.html',function(req,res){
     
@@ -5295,7 +5609,7 @@ app.get('/other.html',function(req,res){
                     }
                     res.write("</table>");
                     res.write("</div>");
-                    
+                    res.end();
                 });
             };
             jeswin();
@@ -5306,6 +5620,8 @@ app.get('/other.html',function(req,res){
         
        
     });
+    
+
 });
 
 http.createServer(app).listen(8081);
