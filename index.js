@@ -6415,6 +6415,246 @@ app.post('/search_tools',function(req,res){
     });
     
 });
+app.post('/search_others',function(req,res){
+    fs.readFile("other.html", function (err, pgResp){
+        if (err) {
+            res.writeHead(404);
+            res.write('Contents you are looking are Not Found');
+        } else {
+            res.write(pgResp);
+            
+            console.log(req.body.jen);
+            var jes = () => {
+                connection.query(`SELECT COUNT(*) AS C FROM new_schema.all_staff_data WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                    if (error) throw error;
+                    var lengt = resu[0].C;
+                    console.log(lengt);
+                    var jen = () => {
+                        connection.query(`SELECT * FROM new_schema.all_staff_data WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`, function (error, result) {
+                            res.write("<h2 style='background-color: red; text-align: center';>All-Staff-Data</h2>");
+                            res.write("<div class='table-responsive container'>");
+                            res.write("<table class='table table-striped table-hover table-bordered'>");
+                            res.write("<tr><td>SR NO</td><td>NAME</td><td>DESG</td><td>STAFF NO</td><td>JOINING DATE</td><td>CONTRACT VALIDITY DATE</td><td>REMAINING DAYS</td><td>AVSEC TRAINING DUE DATE</td><td>REMAINING DAYS</td><td>AEP VALIDITY</td><td>REMAINING DAYS</td><td>ADP VALIDITY</td><td>REMAINING DAYS</td><td>REMARKS</td></tr>");
+                            
+                            for(let i=0;i<lengt;i++) 
+                    {
+                        res.write('<tr>');
+                            if(result[i].sr_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].sr_no.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].name)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].name);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].desgn)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].desgn);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].staff_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].staff_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].joining_date)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].joining_date);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].contract_validity_date)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].contract_validity_date);
+                            res.write('</td>');
+                            
+                            var contract = new Date(result[i].contract_validity_date);
+                            var total_seconds = Math.abs(today - contract) / 1000; 
+                            var days_difference_5 = Math.floor (total_seconds / (60 * 60 * 24)); 
+                            if(days_difference_5<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_5<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_5<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                                res.write(days_difference_5.toString());
+                                res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+
+
+                            if(result[i].avsec_training_due_date)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].avsec_training_due_date);
+                            res.write('</td>');
+                            
+                            var avsec = new Date(result[i].avsec_training_due_date);
+                            var total_seconds = Math.abs(today - avsec) / 1000; 
+                            var days_difference_7 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_7<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_7<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_7<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_7.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].aep_validity)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].aep_validity);
+                            res.write('</td>');
+                            
+                            var aep = new Date(result[i].aep_validity);
+                            var total_seconds = Math.abs(today - aep) / 1000; 
+                            var days_difference_9 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_9<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_9<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_9<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_9.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].adp_validity)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].adp_validity);
+                            res.write('</td>');
+                            var adp = new Date(result[i].adp_validity);
+                            var total_seconds = Math.abs(today - adp) / 1000; 
+                            var days_difference_11 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_11<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_11<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_11<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_11.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].remarks)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].remarks);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                        res.write('</tr>');
+                    }
+                            res.write("</table></div>");
+                            res.end();
+                          });
+                          
+                          
+                            
+                        };
+                    jen();
+                    
+                });
+            };
+            jes();
+            
+        }
+        
+        
+    });
+    
+});
 app.get('/TECHNICIAN.html',function(req,res){
     fs.readFile("TECHNICIAN.html", function (err, pgResp){
         if (err) {
