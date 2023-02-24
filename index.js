@@ -6239,6 +6239,182 @@ app.post('/search_technician',function(req,res){
     });
     
 });
+app.post('/search_tools',function(req,res){
+    fs.readFile("TOOLS.html", function (err, pgResp){
+        if (err) {
+            res.writeHead(404);
+            res.write('Contents you are looking are Not Found');
+        } else {
+            res.write(pgResp);
+            
+            console.log(req.body.jen);
+            var jes = () => {
+                connection.query(`SELECT COUNT(*) AS C FROM new_schema.tools_and_equipment_calibration WHERE LOWER(nomenclature) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                    if (error) throw error;
+                    var lengt = resu[0].C;
+                    console.log(lengt);
+                    var jen = () => {
+                        connection.query(`SELECT * FROM new_schema.tools_and_equipment_calibration WHERE LOWER(nomenclature) LIKE LOWER('%${req.body.jen}%')`, function (error, result) {
+                            res.write("<h2 style='background-color: red; text-align: center';>Tools And Equipment Calibration</h2>");
+                            res.write("<div class='table-responsive container'>");
+                            res.write("<table class='table table-striped table-hover table-bordered'>");
+                            res.write("<tr><td>SR NO</td><td>Nomenclature</td><td>range</td><td>part_no</td><td>ser no</td><td>ciasl id no</td><td>calibration date</td><td>calibration due date</td><td>REMAINING DAYS</td><td>calibration done by orgn</td><td>REMARKS</td></tr>");
+                            
+                            for(let i=0;i<lengt;i++) 
+                    {
+                        res.write('<tr>');
+                            if(result[i].sr_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].sr_no.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].nomenclature)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].nomenclature);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].rang)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].rang);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].part_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].part_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].ser_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].ser_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].ciasl_id_no)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].ciasl_id_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].caliberation_date)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].caliberation_date);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].caliberation_due_date)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].caliberation_due_date);
+                            res.write('</td>');
+                            
+                            var cdd = new Date(result[i].caliberation_due_date);
+                            var total_seconds = Math.abs(today - cdd) / 1000; 
+                            var days_difference_9 = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference_9<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference_9<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference_9<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference_9.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(result[i].caliberation_done_by_orgn)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].caliberation_done_by_orgn);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(result[i].remarks)
+                            {
+                            res.write('<td>');
+                            res.write(result[i].remarks);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                        res.write('</tr>');
+                    }
+                            res.write("</table></div>");
+                            res.end();
+                          });
+                          
+                          
+                            
+                        };
+                    jen();
+                    
+                });
+            };
+            jes();
+            
+        }
+        
+        
+    });
+    
+});
 app.get('/TECHNICIAN.html',function(req,res){
     fs.readFile("TECHNICIAN.html", function (err, pgResp){
         if (err) {
