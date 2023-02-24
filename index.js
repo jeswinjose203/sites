@@ -6655,6 +6655,1271 @@ app.post('/search_others',function(req,res){
     });
     
 });
+app.post('/search_engineers',function(req,res){
+    fs.readFile("ENGINEER.html", function (err, pgResp){
+        if (err) {
+            res.writeHead(404);
+            res.write('Contents you are looking are Not Found');
+        } else {
+            res.write(pgResp);
+            
+            console.log(req.body.jen);
+            var jes = () => {
+                connection.query(`SELECT COUNT(*) AS C FROM new_schema.amelicense WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                    if (error) throw error;
+                    var lengt = resu[0].C;
+                    console.log(lengt);
+                    var jen = () => {
+                        connection.query(`SELECT * FROM new_schema.amelicense WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`, function (error, result) {
+                            res.write("<h2 style='background-color: red; text-align: center';>AME LICENSE</h2>");
+                            res.write("<div class='table-responsive container'>");
+                            res.write("<table class='table table-striped table-hover table-bordered'>");
+                            res.write(`<tr>
+            <td>sr_no</td>
+            <td>name</td>
+            <td>license_cat</td>
+            <td>dgca lic no</td>
+            <td>dgca lic validity</td>
+            <td>remaining days</td>
+            <td>easa lic no</td>
+            <td>easa lic validity</td>
+            <td>remaining days</td>
+            <td>A320_series_V2500</td>
+            <td>A320_series_CFM_56</td>
+            <td>A320_series_LEAP_1A</td>
+            <td>A320_series_p_and_w</td>
+            <td>A330_T700</td>
+            <td>A330_NEO_T70000</td>
+            <td>A330_GE_CF6</td>
+            <td>A350_TRENT_XWB</td>
+            <td>B737_NG_CFM56_7B</td>
+            <td>B737_MAX_LEAP_1B</td>
+            <td>B777_GE_90</td>
+            <td>B787_GEnX</td>
+            <td>remarks</td>
+            </tr>`);
+            for(let i=0;i<lengt;i++) 
+            {
+                res.write('<tr>');
+                    if(result[i].sr_no)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].sr_no.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].name)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].name);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].license_cat)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].license_cat);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].dgca_lic_no)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].dgca_lic_no);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].dgca_lic_validity)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].dgca_lic_validity);
+                    res.write('</td>');
+                    var dgca = new Date(result[i].dgca_lic_validity);
+                    var total_seconds = Math.abs(today - dgca) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[i].easa_lic_no)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].easa_lic_no);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].easa_lic_validity)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].easa_lic_validity);
+                    res.write('</td>');
+                    var easa = new Date(result[i].easa_lic_validity);
+                    var total_seconds = Math.abs(today - easa) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A320_series_V2500)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A320_series_V2500);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A320_series_CFM_56)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A320_series_CFM_56);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A320_series_LEAP_1A)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A320_series_LEAP_1A);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A320_series_p_and_w)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A320_series_p_and_w);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A330_T700)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A330_T700);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A330_NEO_T70000)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A330_NEO_T70000);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A330_GE_CF6)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A330_GE_CF6);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].A350_TRENT_XWB)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].A350_TRENT_XWB);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].B737_NG_CFM56_7B)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].B737_NG_CFM56_7B);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].B737_MAX_LEAP_1B)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].B737_MAX_LEAP_1B);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].B777_GE_90)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].B777_GE_90);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].B787_GEnX)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].B787_GEnX);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[i].remarks)
+                    {
+                    res.write('<td>');
+                    res.write(result[i].remarks);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                res.write('</tr>');
+            }
+                            
+                            res.write("</table></div>");
+                            jes1();
+                          });
+                        };
+                    jen();
+                    
+                });
+                var jes1 = () => {
+                    connection.query(`SELECT COUNT(*) AS C FROM new_schema.ame_continuation_trainings WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                        if (error) throw error;
+                        var lengt = resu[0].C;
+                        console.log(lengt);
+                        var jen1 = () => {
+                            connection.query(`SELECT * FROM new_schema.ame_continuation_trainings WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`, function (error, result) {
+                                res.write("<h2 style='background-color: red; text-align: center';>AME CONTINUATION TRAININGS</h2>");
+                                res.write("<div class='table-responsive container'>");
+                                res.write("<table class='table table-striped table-hover table-bordered'>");
+                                res.write(`<tr><td>SR NO</td>
+            <td>name</td>
+            <td>staff no</td>
+            <td>A320_v2500</td>
+            <td>REMAINING DAYS</td>
+            <td>A320_CFM_LEAP_1A</td><td>REMAINING DAYS</td>
+            <td>A330_RR_T700</td><td>REMAINING DAYS</td>
+            <td>A330_NEO_RR_T7000</td><td>REMAINING DAYS</td>
+            <td>A330_GE_CF6</td><td>REMAINING DAYS</td>
+            <td>A330_P_AND_W</td><td>REMAINING DAYS</td>
+            <td>A350_RR_T-XWB</td><td>REMAINING DAYS</td>
+            <td>B737_CFM56</td><td>REMAINING DAYS</td>
+            <td>B737_MAX_CFM_LEAP1B</td><td>REMAINING DAYS</td>
+            <td>B777_GE90</td><td>REMAINING DAYS</td>
+            <td>B787_GENX</td><td>REMAINING DAYS</td>
+            <td>ADDNL_REFR</td><td>REMAINING DAYS</td>
+            <td>HF</td><td>REMAINING DAYS</td>
+            <td>FTS</td><td>REMAINING DAYS</td>
+            <td>EWIS</td><td>REMAINING DAYS</td>
+            <td>SMS</td><td>REMAINING DAYS</td>
+            <td>regulations</td><td>REMAINING DAYS</td>
+            <td>REMARKS</td></tr>`);
+
+
+            for(let k=0;k<lengt;k++) 
+            {
+                res.write('<tr>');
+                    if(result[k].sr_no)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].sr_no.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[k].name)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].name);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[k].staff_no)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].staff_no);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A320_V2500)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A320_V2500);
+                    res.write('</td>');
+                    var a = new Date(result[k].A320_V2500);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A320_CFM_LEAP_1A)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A320_CFM_LEAP_1A);
+                    res.write('</td>');
+                    var a = new Date(result[k].A320_CFM_LEAP_1A);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A330_RR_T700)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A330_RR_T700);
+                    res.write('</td>');
+                    var a = new Date(result[k].A330_RR_T700);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A330_NEO_RR_T7000)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A330_NEO_RR_T7000);
+                    res.write('</td>');
+                    var a = new Date(result[k].A330_NEO_RR_T7000);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A330_GE_CF6)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A330_GE_CF6);
+                    res.write('</td>');
+                    var a = new Date(result[k].A330_GE_CF6);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A330_P_AND_W)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A330_P_AND_W);
+                    res.write('</td>');
+                    var a = new Date(result[k].A330_P_AND_W);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].A350_RR_T_XWB)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].A350_RR_T_XWB);
+                    res.write('</td>');
+                    var a = new Date(result[k].A350_RR_T_XWB);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].B737_CFM56)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].B737_CFM56);
+                    res.write('</td>');
+                    var a = new Date(result[k].B737_CFM56);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].B737_MAX_CFM_LEAP1B)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].B737_MAX_CFM_LEAP1B);
+                    res.write('</td>');
+                    var a = new Date(result[k].B737_MAX_CFM_LEAP1B);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].B777_GE90)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].B777_GE90);
+                    res.write('</td>');
+                    var a = new Date(result[k].B777_GE90);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].B787_GENX)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].B787_GENX);
+                    res.write('</td>');
+                    var a = new Date(result[k].B787_GENX);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].ADDNL_REFR)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].ADDNL_REFR);
+                    res.write('</td>');
+                    var a = new Date(result[k].ADDNL_REFR);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].HF)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].HF);
+                    res.write('</td>');
+                    var a = new Date(result[k].HF);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].FTS)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].FTS);
+                    res.write('</td>');
+                    var a = new Date(result[k].FTS);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].EWIS)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].EWIS);
+                    res.write('</td>');
+                    var a = new Date(result[k].EWIS);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].SMS)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].SMS);
+                    res.write('</td>');
+                    var a = new Date(result[k].SMS);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].REGULATIONS)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].REGULATIONS);
+                    res.write('</td>');
+                    var a = new Date(result[k].REGULATIONS);
+                    var total_seconds = Math.abs(today - a) / 1000; 
+                    var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                    if(days_difference<5)
+                    {
+                        res.write("<td style='background-color: red;'>");
+                    }
+                    else if(days_difference<15)
+                    {
+                        res.write("<td style='background-color: orange;'>");
+                    }
+                    else if(days_difference<30)
+                    {
+                        res.write("<td style='background-color: yellow;'>");
+                    }
+                    else{
+                        res.write("<td>");
+                    }
+                    res.write(days_difference.toString());
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        res.write('<td></td>');
+                        res.write('<td></td>');
+                    }
+                    if(result[k].REMARK)
+                    {
+                    res.write('<td>');
+                    res.write(result[k].REMARK);
+                    res.write('</td>');
+                    }
+                    else
+                    {
+                        
+                        res.write('<td></td>');
+                    }
+                res.write('</tr>');
+            }
+                                res.write("</table></div>");
+                                jes2();
+                            });
+                        };
+                        jen1();
+                    });
+                    var jes2 = () => {
+                        connection.query(`SELECT COUNT(*) AS C FROM new_schema.ame_authorisations WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`,function(error,resu){
+                            if (error) throw error;
+                            var lengt = resu[0].C;
+                            console.log(lengt);
+                            var jen2 = () => {
+                                connection.query(`SELECT * FROM new_schema.ame_authorisations WHERE LOWER(name) LIKE LOWER('%${req.body.jen}%')`, function (error, resu) {
+                                    res.write("<h2 style='background-color: red; text-align: center';>AME AUTHORISATIONS</h2>");
+                                    res.write("<div class='table-responsive container'>");
+                                    res.write("<table class='table table-striped table-hover table-bordered'>");
+                                    res.write(`<tr><td>SR NO</td>
+                    <td>NAME</td>
+                    <td>STAFF_NO</td>
+                    <td>ciasl_authn_no</td>
+                    <td>ciasl_authn_validity</td><td>Remaining Days</td>
+                    <td>fly_dxb</td><td>Remaining Days</td>
+                    <td>island_authn_validity</td><td>Remaining Days</td>
+                    <td>oman_air</td>
+                    <td>qatar</td>
+                    <td>sri_lanka</td>
+                    <td>kuwait</td>
+                    <td>jazeera</td>
+                    <td>air_arabia</td>
+                    <td>ethihad</td>
+                    <td>gulfair</td>
+                    <td>island</td>
+                    <td>airasia_thai</td>
+                    <td>scoot_tiger</td>
+                    <td>fly__dxb</td>
+                    <td>REMARKS</td></tr>`);
+
+                    for(let k=0;k<lengt;k++) 
+                    {
+                        res.write('<tr>');
+                            if(resu[k].sr_no)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].sr_no.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].name)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].name);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].staff_no)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].staff_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].ciasl_authn_no)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].ciasl_authn_no);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].ciasl_authn_validity)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].ciasl_authn_validity);
+                            res.write('</td>');
+                            var a = new Date(resu[k].ciasl_authn_validity);
+                            var total_seconds = Math.abs(today - a) / 1000; 
+                            var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].fly_dxb)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].fly_dxb);
+                            res.write('</td>');
+                            var a = new Date(resu[k].fly_dxb);
+                            var total_seconds = Math.abs(today - a) / 1000; 
+                            var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].island_authn_validity)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].island_authn_validity);
+                            res.write('</td>');
+                            var a = new Date(resu[k].island_authn_validity);
+                            var total_seconds = Math.abs(today - a) / 1000; 
+                            var days_difference = Math.floor (total_seconds / (60 * 60 * 24));
+                            if(days_difference<5)
+                            {
+                                res.write("<td style='background-color: red;'>");
+                            }
+                            else if(days_difference<15)
+                            {
+                                res.write("<td style='background-color: orange;'>");
+                            }
+                            else if(days_difference<30)
+                            {
+                                res.write("<td style='background-color: yellow;'>");
+                            }
+                            else{
+                                res.write("<td>");
+                            }
+                            res.write(days_difference.toString());
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                res.write('<td></td>');
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].oman_air)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].oman_air);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].qatar)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].qatar);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].sri_lanka)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].sri_lanka);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].kuwait)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].kuwait);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].jazeera)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].jazeera);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].air_arabia)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].air_arabia);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].ethihad)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].ethihad);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].gulfair)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].gulfair);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].island)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].island);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].airasia_thai)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].airasia_thai);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].scoot_tiger)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].scoot_tiger);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].fly__dxb)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].fly__dxb);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                            if(resu[k].remark)
+                            {
+                            res.write('<td>');
+                            res.write(resu[k].remark);
+                            res.write('</td>');
+                            }
+                            else
+                            {
+                                
+                                res.write('<td></td>');
+                            }
+                        res.write('</tr>');
+                    }
+                                    
+                                    res.write("</table></div>");
+                                });
+                            };
+                            jen2();
+                        });
+                    };
+                };
+            };
+            jes();
+            
+        }
+        
+        
+    });
+    
+});
 app.get('/TECHNICIAN.html',function(req,res){
     fs.readFile("TECHNICIAN.html", function (err, pgResp){
         if (err) {
