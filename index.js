@@ -758,10 +758,27 @@ eventEmitter.on('save', myEventHandler);
 
 
 
+const nodemailer = require('nodemailer');
+
 
 var xlsx = require("xlsx");
 var http = require('http');
 var fs = require('fs');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'jenbros.encrypted@gmail.com',
+      pass: 'ibxypmuzwarwmjuk'
+    }
+  });
+
+  const mailOptions = {
+    from: 'jenbros.encrypted@gmail.com',
+    to: 'jeswin4jose@gmail.com',
+    subject: 'Test email',
+    text: 'This is a test email sent from Node.js'
+  };
 
 const express = require('express');
 const app = express();
@@ -1236,6 +1253,14 @@ app.get('/',function(req,res){
             res.write('Contents you are looking are Not Found');
         } else {
             res.write(pgResp);
+            
+transporter.sendMail(mailOptions, (e, info) => {
+    if (e) {
+      console.error(e);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
             res.write(`
             <div class="main-container">
 			<div class="main">
@@ -1245,9 +1270,9 @@ app.get('/',function(req,res){
 							<img src="engineer.png" alt="logo1" class="imgs">
 							<br>
 							<a href="ENGINEER.html" class="topic-heading">ENGINEER</a>
-							<label class="lbl">`);
+							<label for="" class="lbl">`);
                             res.write(cnt4.toString());
-                      res.write(`</label>
+                            res.write(`</label>
 						</div>
 					</div>
 					<div class="box box2">
@@ -1255,8 +1280,7 @@ app.get('/',function(req,res){
 							<img src="technician.png" alt="logo2" class="imgs">
 							<br>
 							<a href="TECHNICIAN.html" class="topic-heading">TECHNICIAN</a>
-							<label class="lbl">`);
-
+							<label for="" class="lbl">`);
                             res.write(cnt2.toString());
                             res.write(`</label>
 						</div>
@@ -1266,7 +1290,7 @@ app.get('/',function(req,res){
 							<img src="auditor.png" alt="logo3" class="imgs">
 							<br>
 							<a href="AUDITOR.html" class="topic-heading">AUDITOR</a>
-							<label class="lbl">`);
+							<label for="" class="lbl" style="margin-left: 30px;">`);
                             res.write(cnt3.toString());
                             res.write(`</label>
 						</div>
@@ -1276,21 +1300,21 @@ app.get('/',function(req,res){
 							<img src="tools.png" alt="logo4" class="imgs">
 							<br>
 							<a href="TOOLS.html" class="topic-heading">TOOLS & EQUIPMENTS</a>
-							<label class="lbl">`);
+							<label for="" class="lbl" style="margin-left: -10px;">`);
                             res.write(cnt1.toString());
                             res.write(`</label>
 						</div>
 				</div>
-                <div class="box box5">
-						<div class="text">
-							<img src="other.png" alt="logo5" class="imgs">
-							<br>
-							<a href="other.html" class="topic-heading">OTHER</a>
-							<label class="lbl">`);
-                            res.write(cnt.toString());
-                            res.write(`</label>
-						</div>
-				</div>
+				<div class="box box5">
+					<div class="text">
+						<img src="other.png" alt="logo5" class="imgs">
+						<br>
+						<a href="other.html" class="topic-heading">OTHERS</a>
+						<label for="" class="lbl" style="margin-left: 40px;">`);
+                        res.write(cnt.toString());
+                        res.write(`</label>
+					</div>
+			</div>
 			</div>
 		</div>
             `);
